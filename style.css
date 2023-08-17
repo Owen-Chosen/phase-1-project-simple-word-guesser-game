@@ -7,7 +7,6 @@ html {
     height: 100%;
     width: 100%;
     font-family: monospace;
-    /* background: rgb(238, 235, 185); */
 }
 
 .basic-layout {
@@ -15,9 +14,9 @@ html {
     margin-left: 55rem;
     width: 70rem;
     height: 70rem;
-    background: rgb(61, 135, 205);
+    background: rgb(75, 147, 151);
     background-size: cover;
-    border: 2px solid rgb(61, 135, 205);
+    border: 2px solid rgb(75, 147, 151);
     border-radius: 2rem;
 }
 
@@ -41,11 +40,10 @@ html {
     top: 65rem;
     left: 75rem;
     letter-spacing: 0.3rem;
-    text-decoration-color: rgb(61, 135, 205);
     font-style: oblique;
     font-weight: bolder;
     font-size: medium;
-    color: rgb(61, 135, 205);
+    color: rgb(75, 147, 151);
 }
 
 #enter-name {
@@ -82,8 +80,11 @@ html {
 
 #image-2 {
     margin-top: 1.6rem;
-    width: 70rem;
+    width: 65rem;
     height: 25rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 ul {
@@ -128,10 +129,6 @@ li {
     margin-bottom: 4rem;
 }
 
-.hide-page {
-    visibility: hidden;
-}
-
 #guess-button {
     width: 15rem; height: 4rem;
     border-radius: 1rem;
@@ -139,7 +136,7 @@ li {
     letter-spacing: 0.5rem;
     font-style: oblique;
     font-weight: bold;
-    margin-top: 2rem;
+    margin-top: 4rem;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -147,6 +144,6 @@ li {
     box-shadow: 0px 0px 2px 2px rgb(59, 61, 63);
 }
 
-/* .hide-game-item {
+.hide-page {
     visibility: hidden;
-} */
+}
