@@ -146,7 +146,7 @@ function isCompleted () {
 // Added event listener to the form that takes in the player guessed letter, and handles it
 guessLetterForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const inputedLetter = e.target.querySelector('#letter-guessed').value;
+    const inputedLetter = e.target.querySelector('#letter-guessed').value.toLowerCase();
     guessLetterForm.reset()
     if (inputedLetter != '') {
         if (tries == 1) {document.querySelector ('#result').textContent = `Game Over!!`;
