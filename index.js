@@ -1,3 +1,5 @@
+//Created an array of objects containing a word and its hint
+//----------------------------------------------------------------------------------------------------------------------------------------------
 const words = [
     {
         word: 'home',
@@ -38,15 +40,58 @@ const words = [
     {
         word: 'cloth',
         hint: 'What we put on',
+    },
+    {
+        word: 'satire',
+        hint: 'The use of irony',
+    }, 
+    {
+        word: 'rubric',
+        hint: 'A heading in manuscript',
+    },
+    {
+        word: 'pseudonym',
+        hint: 'Name used to hide identity',
+    },
+    {
+        word: 'soliloquy',
+        hint: 'An utterance to self',
+    },
+    {
+        word: 'perusal',
+        hint: 'A reading',
+    },
+    {
+        word: 'myriad',
+        hint: 'A great number',
+    },
+    {
+        word: 'obtuse',
+        hint: 'Dull',
+    },
+    {
+        word: 'motif',
+        hint: 'A reoccuring subject',
+    }, 
+    {
+        word: 'hubris',
+        hint: 'Excessive pride',
+    }, 
+    {
+        word: 'erudite',
+        hint: 'great knowledge',
     }
 ]
 //----------------------------------------------------------------------------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------------------------------------------------------------------------
 const hint = document.querySelector('#hint')
 const introPage = document.querySelector ('#input-name');
 const listLetters = document.querySelector ('#list-of-letters')
 const guessLetterForm = document.querySelector ('#input-letter')
-let playerName = ''; let tries = 5;
+document.querySelector('#enter-name').focus();
+let playerName = ''; let tries = 5; 
 
 //----------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -59,6 +104,7 @@ introPage.addEventListener ('submit', (e) => {
             document.querySelector ('#gamePage').classList.remove('hide-page')
             document.querySelector ('#welcome-note').textContent = `WELCOME, ${playerName}!!`
             document.querySelector ('#result').textContent = `Hey ${playerName}, can you guess the word?`
+            document.querySelector('#letter-guessed').focus();
         } else {document.querySelector ('#intro-instruct').textContent = 'Please, can you enter a shorter name'}
     } else {document.querySelector ('#intro-instruct').textContent = 'Enter your name to play the game'}
 })
@@ -66,7 +112,7 @@ introPage.addEventListener ('submit', (e) => {
 //----------------------------------------------------------------------------------------------------------------------------------------------
 
 
-let guessedNum = Math.floor(9*Math.random())
+let guessedNum = Math.floor(19*Math.random())
 let currentWord = words[guessedNum]
 hint.textContent = `Hint: ${currentWord.hint}`
 const arrayOfLetter = currentWord.word.split('')
@@ -93,6 +139,20 @@ function checkIfLetterPresent (char) {
 
 //----------------------------------------------------------------------------------------------------------------------------------------------
 
+function isCompleted () {
+    let count = 0
+    for (let l = 0; l < arrayOfLetter.length; l++) {
+        if (document.getElementById(l).textContent == "") count++
+    }
+    if (count>0) return false
+    else return true
+}
+
+//----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------------
 
 
 guessLetterForm.addEventListener('submit', (e) => {
@@ -109,12 +169,20 @@ guessLetterForm.addEventListener('submit', (e) => {
             document.querySelector ('#result').textContent = `Wrong Guess, you have ${tries} more chances`
         }
         else {
-            // if (checkIfLetterPresent(inputedLetter)) {
-            //     document.querySelector ('#result').textContent = `Sorry, that already exists`
-            // } else {
-                document.querySelector ('#result').textContent = `Nice Guess, thats correct!!`
-                document.getElementById(arrayOfLetter.indexOf(inputedLetter)).textContent = inputedLetter
-            // }
+            for (let m = 0; m < arrayOfLetter.length; m++) {
+                if (document.getElementById(m).textContent == "" && arrayOfLetter[m] == inputedLetter) {
+                    document.querySelector ('#result').textContent = `Nice Guess, thats correct!!`
+                    document.getElementById(m).textContent = inputedLetter;
+                    if (!isCompleted()) {
+                        return
+                    }
+                    else {
+                        document.querySelector ('#result').textContent = `Congratulations ${playerName}, You won!!`
+                        setTimeout(() => location.reload(), 3000);
+                        return
+                    }
+                }
+            }
         }
     } 
     else {
