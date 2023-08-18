@@ -86,15 +86,16 @@ const words = [
 
 
 //----------------------------------------------------------------------------------------------------------------------------------------------
-const hint = document.querySelector('#hint')
-const introPage = document.querySelector ('#input-name');
-const listLetters = document.querySelector ('#list-of-letters')
-const guessLetterForm = document.querySelector ('#input-letter')
-document.querySelector('#enter-name').focus();
-let playerName = ''; let tries = 5; 
+const hint = document.querySelector('#hint') // A node containing h1 tag element (hint)
+const introPage = document.querySelector ('#input-name'); // A node containing input tag element (players name)
+const listLetters = document.querySelector ('#list-of-letters') // A node containing unordered list tag element (letters of the word)
+const guessLetterForm = document.querySelector ('#input-letter') // A node containing input tag element (player guess letter)
+document.querySelector('#enter-name').focus(); // placing focus on the text input area once the page loads
+let playerName = ''; // declaring and initialising player name variable
+let tries = 5; // declaring and initialising number of guesses by player which reduces by one for each wrong guess
 
 //----------------------------------------------------------------------------------------------------------------------------------------------
-
+// Adding event listener to the input area of the first page which takes in players name and switches to the game page
 introPage.addEventListener ('submit', (e) => {
     e.preventDefault(); 
     if (e.target.querySelector('#enter-name').value !== '') {
@@ -111,19 +112,19 @@ introPage.addEventListener ('submit', (e) => {
 
 //----------------------------------------------------------------------------------------------------------------------------------------------
 
+let guessedNum = Math.floor(19*Math.random()) // randomly select a number between 0 - 19 which reps index of the elements of word array
+let currentWord = words[guessedNum] // selecting a word object at the guessed index from the array 
+hint.textContent = `Hint: ${currentWord.hint}` // assigning the hint from the selected word to be displayed as content of the hint node
+const arrayOfLetter = currentWord.word.split('') // split the word into array of letters
 
-let guessedNum = Math.floor(19*Math.random())
-let currentWord = words[guessedNum]
-hint.textContent = `Hint: ${currentWord.hint}`
-const arrayOfLetter = currentWord.word.split('')
-
+// create list spaces that will contain the letters of the word
 for (let i = 0; i < currentWord.word.length; i++) {
     let currentLetter = document.createElement('li')
     currentLetter.id = i;
     listLetters.append (currentLetter)
 }
 
-
+// assign 70% of the letters at random to their respective list tag as text content
 for (let j = 0; j < Math.round(0.7*currentWord.word.length); j++) {
     let letterSelector = Math.floor ((currentWord.word.length-1) * Math.random())
     document.getElementById(letterSelector).textContent = arrayOfLetter[letterSelector]
@@ -131,14 +132,7 @@ for (let j = 0; j < Math.round(0.7*currentWord.word.length); j++) {
 
 //----------------------------------------------------------------------------------------------------------------------------------------------
 
-function checkIfLetterPresent (char) {
-    for (let a = 0; a < arrayOfLetter.length; a++) {
-        if (document.getElementById(a).textContent == char) return true
-    }
-}
-
-//----------------------------------------------------------------------------------------------------------------------------------------------
-
+// function to check if the word is completely spelled (returns boolean value)
 function isCompleted () {
     let count = 0
     for (let l = 0; l < arrayOfLetter.length; l++) {
@@ -147,21 +141,16 @@ function isCompleted () {
     if (count>0) return false
     else return true
 }
-
 //----------------------------------------------------------------------------------------------------------------------------------------------
 
-
-
-//----------------------------------------------------------------------------------------------------------------------------------------------
-
-
+// Added event listener to the form that takes in the player guessed letter, and handles it
 guessLetterForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const inputedLetter = e.target.querySelector('#letter-guessed').value;
     guessLetterForm.reset()
     if (inputedLetter != '') {
         if (tries == 1) {document.querySelector ('#result').textContent = `Game Over!!`;
-        setTimeout(() => location.reload(), 2000);
+        setTimeout(() => location.reload(), 2500);
         return
     }
         if (arrayOfLetter.indexOf(inputedLetter) === -1){
@@ -177,8 +166,8 @@ guessLetterForm.addEventListener('submit', (e) => {
                         return
                     }
                     else {
-                        document.querySelector ('#result').textContent = `Congratulations ${playerName}, You won!!`
-                        setTimeout(() => location.reload(), 3000);
+                        document.querySelector ('#result').textContent = `Congratulations ${playerName}, You did it!!`
+                        setTimeout(() => location.reload(), 3500);
                         return
                     }
                 }
