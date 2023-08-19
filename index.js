@@ -90,6 +90,7 @@ const hint = document.querySelector('#hint') // A node containing h1 tag element
 const introPage = document.querySelector ('#input-name'); // A node containing input tag element (players name)
 const listLetters = document.querySelector ('#list-of-letters') // A node containing unordered list tag element (letters of the word)
 const guessLetterForm = document.querySelector ('#input-letter') // A node containing input tag element (player guess letter)
+const resultText = document.querySelector ('#result') // A node containing h1 tag element (Result)
 document.querySelector('#enter-name').focus(); // placing focus on the text input area once the page loads
 let playerName = ''; // declaring and initialising player name variable
 let tries = 5; // declaring and initialising number of guesses by player which reduces by one for each wrong guess
@@ -104,7 +105,7 @@ introPage.addEventListener ('submit', (e) => {
             document.querySelector ('#start-Page').classList.add('hide-page')
             document.querySelector ('#gamePage').classList.remove('hide-page')
             document.querySelector ('#welcome-note').textContent = `WELCOME, ${playerName}!!`
-            document.querySelector ('#result').textContent = `Hey ${playerName}, can you guess the word?`
+            resultText.textContent = `Hey ${playerName}, can you guess the word?`
             document.querySelector('#letter-guessed').focus();
         } else {document.querySelector ('#intro-instruct').textContent = 'Please, can you enter a shorter name'}
     } else {document.querySelector ('#intro-instruct').textContent = 'Enter your name to play the game'}
@@ -124,7 +125,7 @@ for (let i = 0; i < currentWord.word.length; i++) {
     listLetters.append (currentLetter)
 }
 
-// assign 70% of the letters at random to their respective list tag as text content
+// Assign 70% of the letters at random to their respective position on the list
 for (let j = 0; j < Math.round(0.7*currentWord.word.length); j++) {
     let letterSelector = Math.floor ((currentWord.word.length-1) * Math.random())
     document.getElementById(letterSelector).textContent = arrayOfLetter[letterSelector]
@@ -138,7 +139,7 @@ function isCompleted () {
     for (let l = 0; l < arrayOfLetter.length; l++) {
         if (document.getElementById(l).textContent == "") count++
     }
-    if (count>0) return false
+    if (count > 0) return false
     else return true
 }
 //----------------------------------------------------------------------------------------------------------------------------------------------
@@ -148,35 +149,42 @@ guessLetterForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const inputedLetter = e.target.querySelector('#letter-guessed').value.toLowerCase();
     guessLetterForm.reset()
-    if (inputedLetter != '') {
-        if (tries == 1) {document.querySelector ('#result').textContent = `Game Over!!`;
-        setTimeout(() => location.reload(), 2500);
-        return
-    }
-        if (arrayOfLetter.indexOf(inputedLetter) === -1){
-            tries--;
-            document.querySelector ('#result').textContent = `Wrong Guess, you have ${tries} more chances`
-        }
-        else {
-            for (let m = 0; m < arrayOfLetter.length; m++) {
-                if (document.getElementById(m).textContent == "" && arrayOfLetter[m] == inputedLetter) {
-                    document.querySelector ('#result').textContent = `Nice Guess, thats correct!!`
-                    document.getElementById(m).textContent = inputedLetter;
-                    if (!isCompleted()) {
-                        return
-                    }
-                    else {
-                        document.querySelector ('#result').textContent = `Congratulations ${playerName}, You did it!!`
-                        setTimeout(() => location.reload(), 3500);
-                        return
+    if (inputedLetter.length > 1) resultText.textContent = `Guess one letter at a time`
+    else {
+        if (inputedLetter != '') {
+            if (tries == 1) {
+                resultText.textContent = `Game Over!!`;
+                e.target.querySelector('#letter-guessed').disabled = 'disabled'
+                setTimeout(() => location.reload(), 3000);
+                return
+            }
+            if (arrayOfLetter.indexOf(inputedLetter) === -1){
+                tries--;
+                if (tries === 1) resultText.textContent = `Wrong Guess, you have ${tries} more chance`
+                else resultText.textContent = `Wrong Guess, you have ${tries} more chances`
+            }
+            else {
+                for (let m = 0; m < arrayOfLetter.length; m++) {
+                    if (document.getElementById(m).textContent == "" && arrayOfLetter[m] == inputedLetter) {
+                        resultText.textContent = `Nice Guess, thats correct!!`
+                        document.getElementById(m).textContent = inputedLetter;
+                        if (!isCompleted()) {
+                            return
+                        }
+                        else {
+                            resultText.textContent = `Congratulations ${playerName}, You did it!!`
+                            e.target.querySelector('#letter-guessed').disabled = 'disabled'
+                            setTimeout(() => location.reload(), 5000);
+                            return
+                        }
                     }
                 }
             }
+        } 
+        else {
+            resultText.textContent = `Hey ${playerName}, you didn't enter a letter`
         }
-    } 
-    else {
-        document.querySelector ('#result').textContent = `Hey ${playerName}, you didn't enter a letter`
+       
     }
-   
 })
 
