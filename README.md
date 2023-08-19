@@ -11,7 +11,7 @@ loss, else, it celebrates the players win.
 
 Technologies used includes: HTML, CSS and JAVASCRIPT
 
-Hosted at Netlify: URL: 
+Hosted at Netlify: URL: https://stellular-biscuit-46ba1f.netlify.app/
 
 Below is the code that creates the interactivity 
 //Created an array of objects containing a word and its hint
