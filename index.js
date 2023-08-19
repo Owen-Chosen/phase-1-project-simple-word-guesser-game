@@ -152,7 +152,7 @@ guessLetterForm.addEventListener('submit', (e) => {
     if (inputedLetter.length > 1) resultText.textContent = `Guess one letter at a time`
     else {
         if (inputedLetter != '') {
-            if (tries == 1) {
+            if (tries === 1 && arrayOfLetter.indexOf(inputedLetter) === -1) {
                 resultText.textContent = `Game Over!!`;
                 e.target.querySelector('#letter-guessed').disabled = 'disabled'
                 setTimeout(() => location.reload(), 3000);
