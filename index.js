@@ -126,9 +126,17 @@ for (let i = 0; i < currentWord.word.length; i++) {
 }
 
 // Assign 70% of the letters at random to their respective position on the list
-for (let j = 0; j < Math.round(0.7*currentWord.word.length); j++) {
-    let letterSelector = Math.floor ((currentWord.word.length-1) * Math.random())
-    document.getElementById(letterSelector).textContent = arrayOfLetter[letterSelector]
+const numOfLetterToDisplay = Math.round(0.5*(currentWord.word.length));
+let arrX = [];
+for (let j = 0; j < numOfLetterToDisplay; j++) {
+    const letterSelector = Math.floor ((((currentWord.word).length)-1) * Math.random())
+    if (arrX.indexOf(letterSelector) == -1) {
+        arrX.push(letterSelector)
+        document.getElementById(letterSelector).textContent = arrayOfLetter[letterSelector]
+    }
+    else {
+        --j;
+    }
 }
 
 //----------------------------------------------------------------------------------------------------------------------------------------------
@@ -174,7 +182,7 @@ guessLetterForm.addEventListener('submit', (e) => {
                         else {
                             resultText.textContent = `Congratulations ${playerName}, You did it!!`
                             e.target.querySelector('#letter-guessed').disabled = 'disabled'
-                            setTimeout(() => location.reload(), 5000);
+                            setTimeout(() => location.reload(), 4000);
                             return
                         }
                     }
@@ -187,4 +195,3 @@ guessLetterForm.addEventListener('submit', (e) => {
        
     }
 })
-
